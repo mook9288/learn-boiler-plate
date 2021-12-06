@@ -101,3 +101,24 @@ npm install nodemon --save-dev
 
 - [Heroku로 간단하게 웹 사이트 배포하기](https://velog.io/@ansfls/Heroku로-간단하게-웹-사이트-배포하기)
 - [JohnAhn Heroku 서비스를 이용하여 MERN 스택 앱을 배포하기](https://youtu.be/qdoiwouykAg)
+
+### Bcrypt을 이용한 비밀번호 암호화
+
+- 현재 데이터베이스에 저장된 비밀번호를 보면 안전하지 않다.
+- 비밀번호를 암호화(난수화, 익명화) 해줘서 데이터 베이스에 저장해주는 것이 좋다. 데이터 위조 방지
+
+```bash
+npm install bcrypt --save
+```
+
+#### Bcrypt로 비밀번호 암호화 하는 순서
+
+1. 먼저 Register Route로 가기
+2. 유저 정보들(Account, Password 등등)을 데이터베이스에 저장하기 전, 암호화할 타이밍
+
+   - mongoose의 기능을 사용. `pre()`
+   - Salt 자리수(?)를 나타내는 `saltRounds`를 지정
+   - Salt를 먼저 생성한 후, Salt를 이용하여(`bcrypt.genSalt(자리수, func)`) 비밀번호를 암호화 해야한다.
+   - `bcrypt.hash(실제 입력한 비밀번호, salr, func)`
+
+3. Bcrypt 사이트 보면서 진행
