@@ -115,10 +115,17 @@ npm install bcrypt --save
 
 1. 먼저 Register Route로 가기
 2. 유저 정보들(Account, Password 등등)을 데이터베이스에 저장하기 전, 암호화할 타이밍
+- mongoose의 기능을 사용. `pre('save', func)`: 저장하기 전에 func 실행
+```js
+// User.js
+userSchema.pre("save", function (next) { ... }
+// next => index.js의 app.post("/register", (...) => { ... user.save() }) 부분
+```
+- Salt 자리수(?)를 나타내는 `saltRounds`를 지정
+- Salt를 먼저 생성한 후, Salt를 이용하여(`bcrypt.genSalt(자리수, func(error, salt){...})))`) 비밀번호를 암호화 해야한다.
+- salt를 제대로 생성을 했으면
+```js
+bcrypt.hash(실제 입력한 비밀번호, salt, func(error, 암호화된 비밀번호){...})
+```
 
-   - mongoose의 기능을 사용. `pre()`
-   - Salt 자리수(?)를 나타내는 `saltRounds`를 지정
-   - Salt를 먼저 생성한 후, Salt를 이용하여(`bcrypt.genSalt(자리수, func)`) 비밀번호를 암호화 해야한다.
-   - `bcrypt.hash(실제 입력한 비밀번호, salr, func)`
-
-3. Bcrypt 사이트 보면서 진행
+3. 비밀번호를 변경할 때만 암호화하기 위해 조건 추가(`if (user.isModified('password')) { ... }`)
