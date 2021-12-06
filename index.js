@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 5000;
+const config = require("./config/key");
 const { User } = require("./models/User");
 
 app.use(express.urlencoded({ extended: true }));
@@ -8,11 +9,9 @@ app.use(express.json());
 
 const mongoose = require("mongoose");
 mongoose
-  .connect(
-    "mongodb+srv://mook:test1234@inflearn01.r9udb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-  )
+  .connect(config.mongoURI)
   .then(() => console.log("MongoDB Connected..."))
-  .catch((error) => console.log(error));
+  .catch((error) => console.log("config", config.mongoURI));
 
 app.get("/", (req, res) => res.send("Hello World! 안녕?!!!"));
 

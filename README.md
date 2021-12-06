@@ -2,15 +2,17 @@
 
 - [따라하며 배우는 노드, 리액트 시리즈 - 기본 강의](https://inf.run/MBce)
 
-## node js
+## NodeJS 기초
 
-## express js
+### node js
+
+### express js
 
 ```bash
 npm install express --save
 ```
 
-## mongoDB
+### mongoDB
 
 ```bash
 npm install mongoose --save
@@ -33,7 +35,7 @@ mongoose
   .catch((error) => console.log(error));
 ```
 
-## bodyParser
+### bodyParser
 
 - Client에서 오는 정보를 서버에서 분석해서 가져올 수 있게 해 줌.
 
@@ -57,7 +59,7 @@ app.post("/register", (req, res) => {
 });
 ```
 
-### express 4.x버전부터는 express에 bodyParser가 내장된다.
+- express 4.x버전부터는 express에 bodyParser가 내장된다.
 
 ```js
 const express = require("express");
@@ -66,11 +68,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 ```
 
-## postman에서 POST 결과 확인하기
+### postman에서 POST 결과 확인하기
 
 ![postman에서 POST 결과 확인하기](./images/07.postman_success.png)
 
-## nodemon
+### nodemon
 
 - 소스를 변경할 때를 감지해서 자동으로 서버를 재시작해주는 tool
 - `--save-dev`로 설치된 모듈은 로컬에서만 실행
@@ -91,3 +93,11 @@ npm install nodemon --save-dev
   ...
 }
 ```
+
+### 소스코드 안의 비밀 정보 보호
+
+- mongoDB의 userID와 password가 공개되므로 남들이 사용하지 못하도록 숨겨야한다. `.gitignore`파일에 비밀 정보가 들어 있는 파일을 담아준다.
+- 개발환경이 로컬인지 아니면 배포모드인지에 따라 다르게 설정해줘야한다. 이때, 환경변수를 이용하여 개발(development)/배포(production)모드를 구분해주면 된다.
+
+- [Heroku로 간단하게 웹 사이트 배포하기](https://velog.io/@ansfls/Heroku로-간단하게-웹-사이트-배포하기)
+- [JohnAhn Heroku 서비스를 이용하여 MERN 스택 앱을 배포하기](https://youtu.be/qdoiwouykAg)
