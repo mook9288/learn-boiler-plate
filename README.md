@@ -19,10 +19,10 @@ npm install mongoose --save
 ```
 
 ```js
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 mongoose
   .connect(
-    "mongodb+srv://mook:test1234@inflearn01.r9udb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    'mongodb+srv://mook:test1234@inflearn01.r9udb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
     // mongoose의 버전이 6 이상부터는 아래 코드 오류!!!
     // {
     //   useNewUrlParser: true,
@@ -31,7 +31,7 @@ mongoose
     //   useFindAndModify: false,
     // }
   )
-  .then(() => console.log("MongoDB Connected..."))
+  .then(() => console.log('MongoDB Connected...'))
   .catch((error) => console.log(error));
 ```
 
@@ -53,7 +53,7 @@ app.use(bodyParser.json());
 - bodyParser를 이용해서 `req.body`로 Client에서 오는 정보를 json 형식으로(`{ id: "hellow", password: "123" }`) 받아준다.
 
 ```js
-app.post("/register", (req, res) => {
+app.post('/register', (req, res) => {
   const user = new User(req.body);
   user.save(); // mongoDB에서 오는 메소드,
 });
@@ -62,7 +62,7 @@ app.post("/register", (req, res) => {
 - express 4.x버전부터는 express에 bodyParser가 내장된다.
 
 ```js
-const express = require("express");
+const express = require('express');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -115,17 +115,30 @@ npm install bcrypt --save
 
 1. 먼저 Register Route로 가기
 2. 유저 정보들(Account, Password 등등)을 데이터베이스에 저장하기 전, 암호화할 타이밍
+
 - mongoose의 기능을 사용. `pre('save', func)`: 저장하기 전에 func 실행
+
 ```js
 // User.js
 userSchema.pre("save", function (next) { ... }
 // next => index.js의 app.post("/register", (...) => { ... user.save() }) 부분
 ```
+
 - Salt 자리수(?)를 나타내는 `saltRounds`를 지정
 - Salt를 먼저 생성한 후, Salt를 이용하여(`bcrypt.genSalt(자리수, func(error, salt){...})))`) 비밀번호를 암호화 해야한다.
 - salt를 제대로 생성을 했으면
+
 ```js
 bcrypt.hash(실제 입력한 비밀번호, salt, func(error, 암호화된 비밀번호){...})
 ```
 
 3. 비밀번호를 변경할 때만 암호화하기 위해 조건 추가(`if (user.isModified('password')) { ... }`)
+
+### 로그인 기능 만들기
+
+#### login route 만들기
+
+1. 데이터베이스에서 요청한 E-mail 찾기
+2. 데이터베이스에서 요청한 E-mail이 있다면 비밀번호가 같은지 확인
+3. 비밀번호까지 같다면 Token 생성
+4.
