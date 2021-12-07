@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
 const port = 5000;
+const cookieParser = require('cookie-parser');
 const config = require('./config/key');
 const { User } = require('./models/User');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 const mongoose = require('mongoose');
 mongoose
@@ -44,7 +46,15 @@ app.post('/login', (req, res) => {
       }
 
       // 비밀번호까지 맞다면 Token 생성
-      userInfo.generateToken((error, userInfo) => {});
+      userInfo.generateToken((error, userInfo) => {
+        if (error) return res.status(400).send(error);
+        // token 저장. 로컬스토리지/쿠키 등
+        // 이 강의에서는 쿠키에 저장
+        res.cookie('x_auth', userInfo.token).status(200).json({
+          loginSuccess: true,
+          userId: userInfo._id,
+        });
+      });
     });
   });
 });

@@ -99,8 +99,9 @@ npm install nodemon --save-dev
 - mongoDB의 userID와 password가 공개되므로 남들이 사용하지 못하도록 숨겨야한다. `.gitignore`파일에 비밀 정보가 들어 있는 파일을 담아준다.
 - 개발환경이 로컬인지 아니면 배포모드인지에 따라 다르게 설정해줘야한다. 이때, 환경변수를 이용하여 개발(development)/배포(production)모드를 구분해주면 된다.
 
-- [Heroku로 간단하게 웹 사이트 배포하기](https://velog.io/@ansfls/Heroku로-간단하게-웹-사이트-배포하기)
-- [JohnAhn Heroku 서비스를 이용하여 MERN 스택 앱을 배포하기](https://youtu.be/qdoiwouykAg)
+> **[참고] Heroku 사용하기** \
+> \- [Heroku로 간단하게 웹 사이트 배포하기](https://velog.io/@ansfls/Heroku로-간단하게-웹-사이트-배포하기) \
+> \- [JohnAhn Heroku 서비스를 이용하여 MERN 스택 앱을 배포하기](https://youtu.be/qdoiwouykAg)
 
 ### Bcrypt을 이용한 비밀번호 암호화
 
@@ -114,31 +115,50 @@ npm install bcrypt --save
 #### Bcrypt로 비밀번호 암호화 하는 순서
 
 1. 먼저 Register Route로 가기
-2. 유저 정보들(Account, Password 등등)을 데이터베이스에 저장하기 전, 암호화할 타이밍
-
-- mongoose의 기능을 사용. `pre('save', func)`: 저장하기 전에 func 실행
-
+2. 유저 정보들(Account, Password 등등)을 데이터베이스에 저장하기 전, 암호화할 타이밍 \
+  \- mongoose의 기능을 사용. `pre('save', func)`: 저장하기 전에 func 실행
 ```js
 // User.js
 userSchema.pre("save", function (next) { ... }
 // next => index.js의 app.post("/register", (...) => { ... user.save() }) 부분
 ```
 
-- Salt 자리수(?)를 나타내는 `saltRounds`를 지정
-- Salt를 먼저 생성한 후, Salt를 이용하여(`bcrypt.genSalt(자리수, func(error, salt){...})))`) 비밀번호를 암호화 해야한다.
-- salt를 제대로 생성을 했으면
-
+  \- Salt 자리수(?)를 나타내는 `saltRounds`를 지정 \
+  \- Salt를 먼저 생성한 후, Salt를 이용하여(`bcrypt.genSalt(자리수, func(error, salt){...})))`) 비밀번호를 암호화 해야한다. \
+  \- salt를 제대로 생성을 했으면
 ```js
 bcrypt.hash(실제 입력한 비밀번호, salt, func(error, 암호화된 비밀번호){...})
 ```
 
-3. 비밀번호를 변경할 때만 암호화하기 위해 조건 추가(`if (user.isModified('password')) { ... }`)
+3. 비밀번호를 변경할 때만 암호화하기 위해 조건 추가
+```js
+if (user.isModified('password')) { ... }
+```
 
 ### 로그인 기능 만들기
 
 #### login route 만들기
 
-1. 데이터베이스에서 요청한 E-mail 찾기
-2. 데이터베이스에서 요청한 E-mail이 있다면 비밀번호가 같은지 확인
-3. 비밀번호까지 같다면 Token 생성
-4.
+1. 데이터베이스에서 요청한 E-mail 찾기 \
+  \- mongoose에서 제공하는 메서드 이용, `findOne(conditions, callback)`
+
+2. 데이터베이스에서 요청한 E-mail이 있다면 비밀번호가 같은지 확인 \
+  \- Bcrypt 이용, plain password와 암호화된 패스워드 비교 \
+  \- models/User.js 에서 패스워드 비교 메소드 생성 `userSchema.methods.comparePassword()` \
+  \- 입력 받은 비밀번호를 암호화 시킨 후, 데이터베이스에 저장된 암호화된 비밀번호와 비교해야한다. 동일한 조건에서 대상을 비교해야한다. 이떄, 입력 받은 비밀번호를 암호화시키려면 `bcrypt.compare(입력받은값, 데이터베이스값, callback)`를 이용하면 된다.
+
+3. 비밀번호까지 같다면 Token 생성 \
+  \- `npm install jsonwebtoken --save` jsonwebtoken 패키지 이용
+  \- models/User.js 에서 패스워드 비교 메소드 생성 `userSchema.methods.generateToken()`
+```js
+const jwt = require('jsonwebtoken');
+const token = jwt.sign({foo, bar}, 'ahhhh');
+```
+
+4. 생성된 Token 저장 \
+  \- 로컬스토리지, 세션, 쿠키 등의 공간에 저장이 가능하다. \
+  \- 이 강의에서는 쿠키에 저장함
+
+```bash
+npm install cookie-parser --save
+```
