@@ -69,6 +69,13 @@ app.use(express.json());
 ```
 
 ### postman에서 POST 결과 확인하기
+```json
+{
+  "name": "mook",
+  "email": "mook@test.test",
+  "password": "1234"
+}
+```
 
 ![postman에서 POST 결과 확인하기](./images/07.postman_success.png)
 
@@ -150,6 +157,7 @@ if (user.isModified('password')) { ... }
 3. 비밀번호까지 같다면 Token 생성 \
   \- `npm install jsonwebtoken --save` jsonwebtoken 패키지 이용
   \- models/User.js 에서 패스워드 비교 메소드 생성 `userSchema.methods.generateToken()`
+
 ```js
 const jwt = require('jsonwebtoken');
 const token = jwt.sign({foo, bar}, 'ahhhh');
@@ -162,3 +170,14 @@ const token = jwt.sign({foo, bar}, 'ahhhh');
 ```bash
 npm install cookie-parser --save
 ```
+
+#### 입력받은 정보와 데이터베이스 정보가 같은지 결과 확인하기
+```json
+{
+  "email": "mook@test.test",
+  "password": "1234"
+}
+```
+![postman에서 결과 확인하기](images/12.postman_success.png)
+
+~~처음엔 오류가 있었는데, password의 maxlength의 길이가 부족해서 나는 오류가 있었다.~~

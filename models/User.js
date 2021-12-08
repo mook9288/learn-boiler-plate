@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    maxlength: 5,
+    maxlength: 100,
   },
   lastname: {
     type: String,
@@ -56,14 +56,16 @@ userSchema.methods.comparePassword = function (plainPassword, callback) {
   // plainPassword와 암호화된 비밀번호가 같은지 확인
   // plainPassword도 암호화한 후 비교
   bcrypt.compare(plainPassword, this.password, function (error, isMatch) {
-    if (error) return callback(error), callback(null, isMatch);
+    if (error) return callback(error);
+    callback(null, isMatch);
   });
 };
 
 userSchema.methods.generateToken = function (callback) {
   var user = this;
   // jsonwebtoken을 이용하여 token 생성
-  var token = jwt.sign(user._id, 'secretToken');
+  // var token = jwt.sign(user._id, 'secretToken');
+  var token = jwt.sign(user._id.toHexString(), 'secretToken');
   // user._id + 'secretToken' = token
   // ->>> 'secretToken' -> user._id
   user.token = token;
@@ -71,7 +73,7 @@ userSchema.methods.generateToken = function (callback) {
     if (error) return callback(error);
     callback(null, user);
   })
-}()
+}
 
 const User = mongoose.model('User', userSchema);
 
