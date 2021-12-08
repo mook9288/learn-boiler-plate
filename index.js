@@ -3,6 +3,7 @@ const app = express();
 const port = 5000;
 const cookieParser = require('cookie-parser');
 const config = require('./config/key');
+const { auth } = require('./middleware/auth')
 const { User } = require('./models/User');
 
 app.use(express.urlencoded({ extended: true }));
@@ -17,7 +18,7 @@ mongoose
 
 app.get('/', (req, res) => res.send('Hello World! 안녕?!!!'));
 
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
   // 회원가입할때 필요한 정보들을 Client에서 가져와서 데이터베이스에 넣어준다.
   const user = new User(req.body);
 
@@ -27,7 +28,7 @@ app.post('/register', (req, res) => {
   });
 });
 
-app.post('/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
   // 요청된 이메일을 데이터베이스에서 존재하는지 확인
   User.findOne({ email: req.body.email }, (error, userInfo) => {
     if (!userInfo) {
@@ -57,6 +58,24 @@ app.post('/login', (req, res) => {
       });
     });
   });
+});
+
+app.get('/api/users/auth', auth, (req, res) => {
+  // auth라는 middleware를 추가해준다.
+  // middleware? endpoint의 request를 받은 다음 callback()을 하기 전에 무언가 실행하는 것
+
+  // 여기까지 미들웨어를 통과했다는 얘기는 Authentication 이 true라는 말
+  res.status(200).json({
+    _id: req.user._id,
+    // role 1 -  어드민, role 2 - 특정부서 어드민, role 0 - 일반유저, role 0 이 아니면 관리자
+    isAdmin: req.user.rele === 0 ? false : true,
+    isAuth: true,
+    email: res.user.email,
+    name: res.user.name,
+    lastname: res.user.lastname,
+    role: req.user.role,
+    image: req.user.image
+  })
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

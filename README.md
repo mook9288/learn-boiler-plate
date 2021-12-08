@@ -158,9 +158,10 @@ if (user.isModified('password')) { ... }
   \- `npm install jsonwebtoken --save` jsonwebtoken 패키지 이용
   \- models/User.js 에서 패스워드 비교 메소드 생성 `userSchema.methods.generateToken()`
 
+**토큰 발급**
 ```js
 const jwt = require('jsonwebtoken');
-const token = jwt.sign({foo, bar}, 'ahhhh');
+const token = jwt.sign(<JSON_DATA>, <SECRET_KEY>,  [<OPTIONS>, <CALLBACK>>]);
 ```
 
 4. 생성된 Token 저장 \
@@ -180,4 +181,21 @@ npm install cookie-parser --save
 ```
 ![postman에서 결과 확인하기](images/12.postman_success.png)
 
-~~처음엔 오류가 있었는데, password의 maxlength의 길이가 부족해서 나는 오류가 있었다.~~
+~~처음엔 오류가 있었는데, password의 maxlength값이 부족해서 나는 오류가 있었다.~~
+
+### Auth 기능 만들기
+- auth route 만들기 \
+  \- 페이지 이동 떄마다 로그인 되어 있는지 안되어 있는지, 관리자 유저인지 등을 체크 \
+  \- 글을 쓸때나 지울 때 같은데 권한이 있는지 같은 것도 체크
+
+1. Cookie에서 저장된 Token을 Server에서 가져와서 복호화를 한다.
+2. 복호화를 하면 User ID가 나오는데 그 User ID를 이용해서 데이터베이스 User Collection에서 유저를 찾은 후 쿠키에서 받아온 token이 유저도 갖고 있는지 확인한다.
+
+**토큰 인증(확인)**
+  ```js
+  jwt.verify(<TOKEN>, <SECRET_KEY>,  [<OPTIONS>, <CALLBACK>>])
+  ```
+
+   - 쿠키가 일치하지 않을 때, Authentication False!!!
+   - 쿠기가 일치할 때, Authentication True!!! \
+     그리고 그 해당하는  유저의 정보들을 선별해서 아이디  
