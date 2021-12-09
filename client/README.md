@@ -18,3 +18,17 @@
 ```bash
 npx create-react-app .
 ```
+
+## CRA to Our Boilerplate
+
+```
+- 📂 _actions           // ...Redux를 위한 폴더들
+- 📂 _reducer           // ...Redux를 위한 폴더들
+- 📂 components
+  - 📂 views            // ...이안에는 Page들을 넣는다
+    - 📂 Sections       // ...해당페이지에 관련된 css 파일이나, component 들을 넣는다.
+  - 📄 App.js
+  - 📄 Config.js
+- 📂 hoc                // ...Higher Order Component
+- 📂 utils              // ...여러 군데에서 쓰일 수 있는 것들을 어디서든 쓸 수 있게 이곳에 넣는다.
+```
