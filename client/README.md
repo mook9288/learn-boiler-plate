@@ -32,3 +32,23 @@ npx create-react-app .
 - 📂 hoc                // ...Higher Order Component
 - 📂 utils              // ...여러 군데에서 쓰일 수 있는 것들을 어디서든 쓸 수 있게 이곳에 넣는다.
 ```
+
+## React Router Dom
+
+- 페이지 이동할때 React Router Dom을 사용
+
+```bash
+npm install react-route-dom --save
+```
+
+## Data Request Response Flow and Axios
+
+- Client에서 Server로 요청(Request)을 보냄
+- Server는 DB에서 요청 받은 내용을 찾음
+- DB에서 찾은 내용에 대한 성공여부 결과와 함께 값을 Client에게 응답(Response)해줌
+- 요청을 보낼때는 AXIOS를 사용함(jQuery 사용 시, Ajax같은거)
+
+  ```bash
+  npm install axios --save
+  ```
+
