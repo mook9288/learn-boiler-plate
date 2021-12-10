@@ -52,3 +52,69 @@ npm install react-route-dom --save
   npm install axios --save
   ```
 
+## CORS 이슈와 해결 방법(Proxy)
+
+```js
+// src/components/view/LandingPage/LandingPage.js
+axios.get('/api/hello').then((response) => console.log(response.data));
+```
+
+Client와 Server의 포트가 달라 404 error가 발생한다.
+
+```js
+// src/components/view/LandingPage/LandingPage.js
+axios
+  .get('http://localhost:5000/api/hello')
+  .then((response) => console.log(response.data));
+```
+
+url 넣어줬으나 error가 발생한다.
+두개의 다른 포트를 가지고 있는 서버에서는 아무 설정없이 Request를 보낼 수 없다.
+CORS(Cross-Origin Resource Sharing) 정책이라는 보안 이슈 정책 때문이다.
+
+해결 방법으로는 여러가지 방법이 있는데 그 중에 Proxy를 사용하는 방법으로 해결하려고 한다.
+
+```bash
+npm install http-proxy-middleware --save
+```
+
+#### src/setupProxy.js 파일 생성
+
+```js
+const proxy = require('http-proxy-middleware');
+module.exports = function (app) {
+  app.use(
+    '/api',
+    proxy({
+      // ...
+    })
+  );
+};
+```
+
+http-proxy-middleware가 버전이 업데이트가 되면서 사용법이 아래처럼 바뀌었다.
+
+```js
+const { createProxyMiddleware } = require('http-proxy-middleware');
+module.exports = function (app) {
+  app.use(
+    '/api',
+    createProxyMiddleware({
+      // ...
+    })
+  );
+};
+```
+
+### Proxy Server
+
+Client가 Server에 요청을 보내면 Server는 Client에게 응답을 보내준다.
+Client가 Proxy Server에 IP를 보냈을 때, Proxy Server에서 아이피를 임의로 바꿔버릴 수 있다. 그래서 인터넷에서는 접근하는 사람의 IP를 모를 수 있게 하기도 하고 보내는 데이터도 임의로 바꿀 수 있다.
+그 외 방화벽 기능, 웹 필터 기능, 캐쉬데이터/공유데이터 제공 기능을 할 수 있다.
+
+#### Proxy Server를 사용하는 이유
+
+- 회사에서 직원들이나 지안에서 아이들의 인터넷 사용 제어
+- 캐쉬를 이용해 더 빠른 인터넷 이용 제공
+- 더 나은 보안 제공
+- 이용 제한된 사이트 접근 가능
