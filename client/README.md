@@ -118,3 +118,22 @@ Client가 Proxy Server에 IP를 보냈을 때, Proxy Server에서 아이피를 �
 - 캐쉬를 이용해 더 빠른 인터넷 이용 제공
 - 더 나은 보안 제공
 - 이용 제한된 사이트 접근 가능
+
+## Concurrently를 이용해서 프론트/백 서버 한번에 켜기
+
+```bash
+npm install concurrently --save
+```
+
+#### package.json의 script 추가
+
+```json
+{
+  // ...
+  "scripts": {
+    // ...
+    "dev": "concurrently \"npm run devStart\" \"npm run start --prefix client\""
+  }
+  // ...
+}
+```

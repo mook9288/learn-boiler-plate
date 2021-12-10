@@ -1,7 +1,7 @@
 {
-  "name": "inflearn-boiler-plate",
+  "name": "server",
   "version": "1.0.0",
-  "description": "inflearn lecture",
+  "description": "inflearn lecture server",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
