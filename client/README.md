@@ -137,3 +137,33 @@ npm install concurrently --save
   // ...
 }
 ```
+
+## Redux
+
+- 상태 관리 라이브러리
+
+#### Props
+
+- properties 줄임말
+- 구성 요소들이 서로 대화하는 방식
+- 부모 컴포넌트에서 자식 컴포넌트로 보내는 방식
+- 자식 컴포넌트로 내려준 props는 불변의 값, 값을 변경하려면 부모 컴포넌트에서 내부 상태를 바꿈
+
+#### State
+
+- 부모 컨포넌트에서 자식 컨포넌트로 data를 보내는게 아닌 그 컴포넌트안에서 데이터를 교환/전달
+- state는 변화가 가능한 값
+- state가 변화면 re-rander됨
+
+### Redux가 있고 없고의 차이
+
+Redux가 없으면 정보를 주고 받을 때, 순서대로 거쳐가야만 주고 받을 수 있다.
+Redux를 사용하면 직접 접근하여 정보를 주고 받을 수 있다.
+
+### Redux 데이터 Flow (strict unidirectional data flow)
+
+components에서 action, reducer, store를 거쳐 다시 component로 돌아오는 방식이며, 한 방향으로 흐른다.
+
+- **Action**: 무엇이 일어났는지 설명하는 객체로 이루어져 있다.
+- **Reducer**: action을 거쳐 state가 변경되는 것을 설명한다. 이전 state와 action object를 받은 후에 next state를 반환한다.
+- **Store**: 어플리케이션의 state을 감싸주는 역할을 한다. Store는 여러 메소드들을 가지고 있어 이를 이용하여 state를 관리할 수 있다.
