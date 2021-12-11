@@ -162,8 +162,28 @@ Redux를 사용하면 직접 접근하여 정보를 주고 받을 수 있다.
 
 ### Redux 데이터 Flow (strict unidirectional data flow)
 
-components에서 action, reducer, store를 거쳐 다시 component로 돌아오는 방식이며, 한 방향으로 흐른다.
+components에서 dispatch를 이용하여 action, reducer, store를 거쳐 다시 component로 돌아오는 방식이며, 한 방향으로 흐른다.
 
 - **Action**: 무엇이 일어났는지 설명하는 객체로 이루어져 있다.
 - **Reducer**: action을 거쳐 state가 변경되는 것을 설명한다. 이전 state와 action object를 받은 후에 next state를 반환한다.
 - **Store**: 어플리케이션의 state을 감싸주는 역할을 한다. Store는 여러 메소드들을 가지고 있어 이를 이용하여 state를 관리할 수 있다.
+
+### Redux 설정하기
+
+#### install 해야할 Dependency
+
+```bash
+npm install redux react-redux redux-promise redux-thunk --save
+```
+
+- **redux**:
+- **react-redux**:
+- **redux-promise와 redux-thunk**:
+
+##### redux-promise와 redux-thunk
+
+Redux store 안에 모든 state를 관리하는데 state를 변경하고 싶으면 dispatch를 이용해서 action으로 변경을 시킬 수 있다. action은 객체 형식이여야 store가 받을 수 있다.
+
+store에서 언제나 객체형식의 액션을 받는게 아니라 promise 또는 function 형태로 받을 때도 있다. **redux-thunk은 dispatch한테 펑션을 받는 방법**을 알려준다. **redux-promise은 dispatch한테 프로미스가 왔을 때 어떻게 대처를 해야하는지** 알려준다.
+
+redux-promise와 redux-thunk는 redux의 middleware이고, Redux를 잘 쓸 수 있게 도와주는 역할을 한다.
