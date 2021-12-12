@@ -187,3 +187,39 @@ Redux store 안에 모든 state를 관리하는데 state를 변경하고 싶으�
 store에서 언제나 객체형식의 액션을 받는게 아니라 promise 또는 function 형태로 받을 때도 있다. **redux-thunk은 dispatch한테 펑션을 받는 방법**을 알려준다. **redux-promise은 dispatch한테 프로미스가 왔을 때 어떻게 대처를 해야하는지** 알려준다.
 
 redux-promise와 redux-thunk는 redux의 middleware이고, Redux를 잘 쓸 수 있게 도와주는 역할을 한다.
+
+### React vs. React Hooks
+
+React Component는 크게 2가지 방법으로 사용한다.
+
+#### Class Component
+
+```js
+import React, { Component } from 'react';
+export default class Hello extends Component {
+  rander() {
+    return <div>Hello World!!</div>;
+  }
+}
+```
+
+- 제공되는 기능이 다양함
+- 코드가 길어짐
+- 코드가 좀 더 복잡함
+- 성능이 조금 느림
+
+#### Functional Component
+
+```js
+import React from 'react';
+export default function Hello() {
+  return <div>Hello World!!</div>;
+}
+```
+
+- 제공되는 기능이 한정적임
+- 코드가 짧아짐
+- 코드가 좀 더 간단함
+- 성능이 조금 빨라짐
+
+React 16.8버전에서 Hooks이 업데이트 되면서 Functional Component에서도 LifeCycle을 사용할 수 있게 되었다.

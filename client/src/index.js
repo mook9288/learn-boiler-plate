@@ -5,8 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import App from './App';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
-import { promiseMiddleware } from 'redux-promise';
-import { ReduxThunk } from 'redux-thunk';
+import promiseMiddleware from 'redux-promise';
+import ReduxThunk from 'redux-thunk';
 import Reducer from './_reducers';
 
 const createStoreWithMiddleware = applyMiddleware(
