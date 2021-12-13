@@ -223,3 +223,14 @@ export default function Hello() {
 - 성능이 조금 빨라짐
 
 React 16.8버전에서 Hooks이 업데이트 되면서 Functional Component에서도 LifeCycle을 사용할 수 있게 되었다.
+
+## 로그인 페이지 만들기
+
+- 이메일과 비밀번호를 입력
+- 확인 버튼으로 로그인 요청
+- 입력받은 이메일과 비밀번호가 DB와 일치하면 landingPage로 이동, 불일치하면 alert 노출
+
+## 회원가입 페이지 만들기
+
+- 이메일, 이름, 비밀번호, 비밀번호 확인 입력
+- 확인 버튼으로 가입요청
