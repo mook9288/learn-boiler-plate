@@ -74,9 +74,9 @@ app.get('/api/users/auth', auth, (req, res) => {
     // role 1 -  어드민, role 2 - 특정부서 어드민, role 0 - 일반유저, role 0 이 아니면 관리자
     isAdmin: req.user.rele === 0 ? false : true,
     isAuth: true,
-    email: res.user.email,
-    name: res.user.name,
-    lastname: res.user.lastname,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
     role: req.user.role,
     image: req.user.image,
   });

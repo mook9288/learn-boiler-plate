@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { loginUser } from '../../../_actions/user_action';
 
 function LoginPage(props) {
@@ -94,4 +95,4 @@ const InpBox = styled.div`
   }
 `;
 
-export default LoginPage;
+export default withRouter(LoginPage);

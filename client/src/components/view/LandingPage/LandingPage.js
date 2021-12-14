@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 
 function LandingPage(props) {
   useEffect(() => {
@@ -43,4 +44,4 @@ const Layout = styled.div`
   }
 `;
 
-export default LandingPage;
+export default withRouter(LandingPage);
