@@ -4,10 +4,10 @@
   "description": "inflearn lecture",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "devStart": "nodemon server/index.js",
+    "clientStart": "node server/index.js",
+    "serverStart": "nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"npm run devStart --prefix server\" \"npm run start --prefix client\"",
+    "start": "concurrently \"npm run devStart --prefix server\" \"npm run start --prefix client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "mook",
