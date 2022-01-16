@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const port = 5000;
 const cookieParser = require('cookie-parser');
+const port = process.env.PROT || 5000;
 const config = require('./config/key');
 const { auth } = require('./middleware/auth');
 const { User } = require('./models/User');
@@ -88,5 +88,12 @@ app.get('/api/users/logout', auth, (req, res) => {
     return res.status(200).send({ success: true });
   });
 });
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'));
+  });
+}
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

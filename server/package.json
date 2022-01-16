@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "inflearn lecture server",
   "main": "index.js",
+  "engine": {
+    "node": "17.0.1",
+    "npm": "8.1.0"
+  },
   "scripts": {
     "start": "node index.js",
     "devStart": "nodemon index.js",
