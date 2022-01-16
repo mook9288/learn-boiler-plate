@@ -4,9 +4,6 @@
   "description": "inflearn lecture",
   "main": "index.js",
   "scripts": {
-    "clientStart": "node server/index.js",
-    "serverStart": "nodemon server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run devStart --prefix server\" \"npm run start --prefix client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
