@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "inflearn lecture",
   "main": "index.js",
-  "engines": {
-    "node": "17.0.1",
-    "npm": "8.1.0"
-  },
   "scripts": {
     "start": "concurrently \"npm run devStart --prefix server\" \"npm run start --prefix client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
