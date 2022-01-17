@@ -27,8 +27,6 @@ mongoose
     )
   );
 
-app.get('/', (req, res) => res.send('Hello World! 안녕?!!!'));
-
 app.get('/api/hello', (req, res) => {
   res.send('안녕하세요!!!!!');
 });
