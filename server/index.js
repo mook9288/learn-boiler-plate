@@ -13,8 +13,19 @@ app.use(cookieParser());
 const mongoose = require('mongoose');
 mongoose
   .connect(config.mongoURI)
-  .then(() => console.log('MongoDB Connected...'))
-  .catch((error) => console.log('config', config.mongoURI));
+  .then(() =>
+    console.log('MongoDB Connected...', process.env.PORT, process.env.NODE_ENV)
+  )
+  .catch((error) =>
+    console.log(
+      'config',
+      config.mongoURI,
+      '| PORT >>',
+      process.env.PORT,
+      '| NODE_ENV >>',
+      process.env.NODE_ENV
+    )
+  );
 
 app.get('/', (req, res) => res.send('Hello World! 안녕?!!!'));
 

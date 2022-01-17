@@ -4,12 +4,15 @@
   "description": "inflearn lecture",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run devStart --prefix server\" \"npm run start --prefix client\"",
+    "backend": "nodemon server/index.js",
+    "frontend": "npm run start --prefix client",
+    "start": "concurrently \"npm run backend\" \"npm run start --prefix client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "mook",
   "license": "ISC",
-  "dependencies": {
-    "concurrently": "^6.4.0"
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.19.1"
   }
 }
